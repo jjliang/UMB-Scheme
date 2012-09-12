@@ -1,0 +1,8 @@
+# .printit -- print out src for UMB Scheme
+print Makefile portable.h object.h object.c architecture.h architecture.c \
+      steering.h steering.c debug.h debug.c io.h io.c \
+      compiler.h compiler.c eval.h eval.c primitive.h primitive.c \
+      number.h number.c fixnum.h fixnum.c bignum.h bignum.c \
+      rational.h rational.c real.h real.c complex.h complex.c \
+      prelude.scheme
+      

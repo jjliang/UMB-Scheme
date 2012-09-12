@@ -1,0 +1,167 @@
+This message announces the availability of Scheme Library release
+slib2a3.
+
+New in release slib2a3 is:
+
+	From: johnm@vlibs.com (John Gerard Malecki)
+	* priorque.scm (heap:heapify): internal defines incorrectly
+	dependent on order-of-eval replaced with let*.
+
+	From: mhc@edsdrd.eds.com (Michael H Coffin)
+	* primes.scm (primes probably-prime?): added.  prime.scm renamed
+	to factor.scm.
+
+	From: Matthew McDonald <mafm@cs.uwa.edu.au>
+	* struct.scm (define-record): added field-setters.
+
+	From: johnm@vlibs.com (John Gerard Malecki)
+	* sort.scm (sort:sort!): long standing bug in sort! with vector
+	argument fixed.
+
+	From: jaffer@ai.mit.edu (Aubrey Jaffer)
+	* synclo.scm (internal-syntactic-environment
+	top-level-syntactic-environment): replaced call to alist-copy.
+	* require.scm (*catalog*): 'schelog, 'primes, and 'batch added.
+	'prime renamed to 'factor.
+	* batch.scm: added
+	* Makefile (schelogfiles): SLIB schelog distribution created.
+	* comlist.scm (coerce type-of): added.
+	* debug.scm (debug:qp): with *qp-width* of 0 just `write's.
+	* paramlst.scm (getopt->parameter-list): Now accepts long-named
+	options.  Now COERCEs according to types.
+	* require.scm (require:feature->path): Returns #f instead of
+	string if feature not in *catalog* or *modules*.
+	* getopt.scm (getopt-- argc argv optstring): added wrapper for
+	getopt which parses long-named-options.
+	* paramlst.scm (parameter-list-expand expanders parms): added.
+	* report.scm (dbutil:print-report): added.
+	* comparse.scm (read-command): added.  Reads from a port and
+	returns a list of strings: the arguments (and options).
+	* repl.scm (repl:repl): Added loop, conditional on CHAR-READY?
+	being PROVIDED?, which reads through trailing white-space.
+	* paramlst.scm ((make-parameter-list parameter-names)): 
+	((fill-empty-parameters defaults parameter-list)): 
+	((check-parameters checks parameter-list)): 
+	((parameter-list->arglist positions arities parameter-list)): 
+	((parameter-list-ref parameter-list i)): 
+	((adjoin-parameters! parameter-list parameters)): 
+	Procedures for making, merging, defaulting, checking and
+	converting `parameter lists' (named parameters).
+	((getopt->parameter-list argc argv optnames arities aliases)): 
+	((getopt->arglist argc argv optnames positions
+			 arities defaults checks aliases)): 
+	Procedures for converting options and arguments processed by
+	getopt to parameter-list or arglist form.
+	* dbutil.scm ((make-command-server rdb command-table)): added
+	procedure which calls commands and processes parameters.
+	* rdms.scm ((make-relational-system base)): add-domain and
+	delete-domain commands moved to "dbutil.scm" (create-database).
+	* debug.scm (debug:tracef debug:untracef): removed (duplicates of
+	code in "trace.scm").
+	(trace-all): utility to trace all defines in a file added.
+	* logical.scm (logbit? logtest): added.
+	* dbutil.scm (dbutil:create-database)): Added parameter
+	description tables for "commands".
+	* require.scm (software-type): standardize msdos -> ms-dos.
+	* comlist.scm (comlist:atom?): renamed from comlist:atom.
+	* scheme48.init	(char->integer integer->char): Now use integers in
+	the range 0 to 255.  Fixed several other problems.
+	(modulo): Worked around negative modulo bug.
+	* Makefile (slib48): `make slib48' loads "scheme48.init", `,dump's
+	a scheme48 image file, and creates an `slib48' shell script to
+	invoke it.
+	* hash.scm (hash:hash-number): no longer does inexact->exact to
+	exacts, etc.
+	* trnscrpt.scm (read): no longer transcripts eof-objects.
+	* dbutil.scm (open-database! open-database create-database): This
+        enhancement wraps a utility layer on `relational-database' which
+        provides:
+	  * Automatic loading of the appropriate base-table package when
+	    opening a database.
+	  * Automatic execution of initialization commands stored in
+	    database.
+	  * Transparent execution of database commands stored in
+	    `*commands*' table in database.
+	* rdms.scm (make-relational-system base): Now more careful about
+	protecting read-only databases.
+	* dbutil.scm (dbutil:define-tables): added utility which provides:
+	Data definition from Scheme lists for any SLIB
+	relational-database.
+	* alistab.scm rdms.scm (make-getter row-eval): evaluation of
+	`expression' fields no longer done when retrieved from base
+	tables (which made copying of many tables impossible).
+	* alistab.scm 
+	(write-base): rewrote to not use pretty-print.
+	* sc3.scm: removed (only contained last-pair, t, and nil).
+	* Template.scm scheme48.init vscm.init (last-pair t nil): added.
+	* mularg.scm pp.scm ratize.scm: copyright line removed from files
+	(still lacking terms) less than 12 lines.
+	* *.scm: Most missing copyright notices supplied.
+	* rdms.scm (make-relational-system base): now checks field types
+	when table is opened.  Domains table now has foreign-table field.
+	(for-each-row): ordered for-each function added.
+	* alistab.scm (ordered-for-each-key supported-key-type?): added.
+	* priorque.scm: Renamed everything to conform to coding standards
+	and updated docs.  Changed names: heap-extract-max to
+	heap-extract-max!, heap-insert to heap-insert! and heap-size to
+	heap-length.
+	* Template.scm *.init (identity): Now required; moved from
+	"comlist.scm".
+	* alistab.scm (alist-table): Converted to representing rows as
+	lists.  Non-row operations removed.
+	* rdms.scm (make-relational-system base): Most individual column
+	operations removed.  Only get and get* remain.  Row operations
+	renamed.   Row inserts and updates distinguished.
+
+SLIB is a portable scheme library meant to provide compatibiliy and
+utility functions for all standard scheme implementations.
+
+SLIB includes initialization files for Chez, ELK 2.1, GAMBIT,
+MacScheme, MITScheme, scheme->C, Scheme48, T3.1, and VSCM.  SCM also
+supports SLIB.
+
+Documentation includes a manifest, installation instructions, and
+coding standards for the library.  Documentation on each library
+package is supplied.
+
+SLIB is a portable Scheme library:
+ ftp-swiss.ai.mit.edu:pub/scm/slib2a3.tar.gz
+ prep.ai.mit.edu:pub/gnu/jacal/slib2a3.tar.gz
+ ftp.maths.tcd.ie:pub/bosullvn/jacal/slib2a3.tar.gz
+ ftp.cs.indiana.edu:/pub/scheme-repository/imp/slib2a3.tar.gz
+
+SLIB-PSD is a portable debugger for Scheme (requires emacs editor):
+ ftp-swiss.ai.mit.edu:pub/scm/slib-psd1-3.tar.gz
+ prep.ai.mit.edu:pub/gnu/jacal/slib-psd1-3.tar.gz
+ ftp.maths.tcd.ie:pub/bosullvn/jacal/slib-psd1-3.tar.gz
+ ftp.cs.indiana.edu:/pub/scheme-repository/utl/slib-psd1-3.tar.gz
+
+SLIB-SCHELOG is an embedding of Prolog in Scheme:
+ ftp-swiss.ai.mit.edu:pub/scm/slib-schelog.tar.gz
+ prep.ai.mit.edu:pub/gnu/jacal/slib-schelog.tar.gz
+ ftp.maths.tcd.ie:pub/bosullvn/jacal/slib-schelog.tar.gz
+ ftp.cs.indiana.edu:/pub/scheme-repository/utl/slib-schelog.tar.gz
+
+Programs for printing and viewing TexInfo documentation (which SLIB
+has) come with GNU Emacs or can be obtained via ftp from:
+prep.ai.mit.edu:pub/gnu/texinfo-3.1.tar.gz
+
+Files in these directories are compressed with patent-free gzip (no
+relation to zip).  The program to uncompress them is available from
+ prep.ai.mit.edu:pub/gnu/gzip-1.2.4.tar
+ prep.ai.mit.edu:pub/gnu/gzip-1.2.4.shar
+ prep.ai.mit.edu:pub/gnu/gzip-1.2.4.msdos.exe
+
+  ftp ftp-swiss.ai.mit.edu (anonymous)
+  bin
+  cd pub/scm
+  get slib2a3.tar.gz
+or
+  ftp prep.ai.mit.edu (anonymous)
+  cd pub/gnu/jacal
+  bin
+  get slib2a3.tar.gz
+
+  `slib2a3.tar.gz' is a compressed tar file of a Scheme Library.
+
+Remember to use binary mode when transferring the *.tar.gz files.

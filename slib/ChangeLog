@@ -1,0 +1,934 @@
+Mon Jun 12 16:20:54 1995  Aubrey Jaffer  (jaffer@jacal)
+
+	* synclo.scm (internal-syntactic-environment
+	top-level-syntactic-environment): replaced call to alist-copy.
+
+	* require.scm (*catalog*): 'schelog, 'primes, and 'batch added.
+	'prime renamed to 'factor.
+
+	From: mhc@edsdrd.eds.com (Michael H Coffin)
+	* primes.scm (primes probably-prime?): added.  prime.scm renamed
+	to factor.scm.
+
+Fri Mar 24 23:35:25 1995  Matthew McDonald <mafm@cs.uwa.edu.au>
+
+	* struct.scm (define-record): added field-setters.
+
+Sun Jun 11 23:36:55 1995  Aubrey Jaffer  (jaffer@jacal)
+
+	* batch.scm: added
+
+	* Makefile (schelogfiles): SLIB schelog distribution created.
+
+Mon Apr 17 15:57:32 1995  Aubrey Jaffer  (jaffer@jacal)
+
+	* comlist.scm (coerce type-of): added.
+
+	* debug.scm (debug:qp): with *qp-width* of 0 just `write's.
+
+	* paramlst.scm (getopt->parameter-list): Now accepts long-named
+	options.  Now COERCEs according to types.
+
+Sat Apr 15 23:15:26 1995  Aubrey Jaffer  (jaffer@jacal)
+
+	* require.scm (require:feature->path): Returns #f instead of
+	string if feature not in *catalog* or *modules*.
+
+Sun Mar 19 22:26:52 1995  Aubrey Jaffer  (jaffer@jacal)
+
+	* getopt.scm (getopt-- argc argv optstring): added wrapper for
+	getopt which parses long-named-options.
+
+Tue Feb 28 21:12:14 1995  Aubrey Jaffer  (jaffer@jacal)
+
+	* paramlst.scm (parameter-list-expand expanders parms): added.
+
+Mon Feb 27 17:23:54 1995  Aubrey Jaffer  (jaffer@jacal)
+
+	* report.scm (dbutil:print-report): added.
+
+	* comparse.scm (read-command): added.  Reads from a port and
+	returns a list of strings: the arguments (and options).
+
+Sat Feb 25 01:05:25 1995  Aubrey Jaffer  (jaffer@jacal)
+
+	* repl.scm (repl:repl): Added loop, conditional on CHAR-READY?
+	being PROVIDED?, which reads through trailing white-space.
+
+Sun Feb  5 16:34:03 1995  Aubrey Jaffer  (jaffer@jacal)
+
+	* paramlst.scm ((make-parameter-list parameter-names)): 
+	((fill-empty-parameters defaults parameter-list)): 
+	((check-parameters checks parameter-list)): 
+	((parameter-list->arglist positions arities parameter-list)): 
+	((parameter-list-ref parameter-list i)): 
+	((adjoin-parameters! parameter-list parameters)): 
+	Procedures for making, merging, defaulting, checking and
+	converting `parameter lists' (named parameters).
+	((getopt->parameter-list argc argv optnames arities aliases)): 
+	((getopt->arglist argc argv optnames positions
+			 arities defaults checks aliases)): 
+	Procedures for converting options and arguments processed by
+	getopt to parameter-list or arglist form.
+
+	* dbutil.scm ((make-command-server rdb command-table)): added
+	procedure which calls commands and processes parameters.
+
+	* rdms.scm ((make-relational-system base)): add-domain and
+	delete-domain commands moved to "dbutil.scm" (create-database).
+
+Fri Feb  3 11:07:46 1995  Aubrey Jaffer  (jaffer@jacal)
+
+	* debug.scm (debug:tracef debug:untracef): removed (duplicates of
+	code in "trace.scm").
+	(trace-all): utility to trace all defines in a file added.
+
+Thu Jan 19 00:26:14 1995  Aubrey Jaffer  (jaffer@jacal)
+
+	* logical.scm (logbit? logtest): added.
+
+Sun Jan 15 20:38:42 1995  Aubrey Jaffer  (jaffer@jacal)
+
+	* dbutil.scm (dbutil:create-database)): Added parameter
+	description tables for "commands".
+
+	* require.scm (software-type): standardize msdos -> ms-dos.
+
+Mon Jan  2 10:26:45 1995  Aubrey Jaffer  (jaffer@jacal)
+
+	* comlist.scm (comlist:atom?): renamed from comlist:atom.
+
+	* scheme48.init	(char->integer integer->char): Now use integers in
+	the range 0 to 255.  Fixed several other problems.
+	(modulo): Worked around negative modulo bug.
+
+	* Makefile (slib48): `make slib48' loads "scheme48.init", `,dump's
+	a scheme48 image file, and creates an `slib48' shell script to
+	invoke it.
+
+	* hash.scm (hash:hash-number): no longer does inexact->exact to
+	exacts, etc.
+
+	* trnscrpt.scm (read): no longer transcripts eof-objects.
+
+	From: johnm@vlibs.com (John Gerard Malecki)
+	* priorque.scm (heap:heapify): internal defines incorrectly
+	dependent on order-of-eval replaced with let*.
+
+Thu Dec 22 13:28:16 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* dbutil.scm (open-database! open-database create-database): This
+        enhancement wraps a utility layer on `relational-database' which
+        provides:
+	  * Automatic loading of the appropriate base-table package when
+	    opening a database.
+	  * Automatic execution of initialization commands stored in
+	    database.
+	  * Transparent execution of database commands stored in
+	    `*commands*' table in database.
+
+Wed Dec 21 22:53:57 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* rdms.scm (make-relational-system base): Now more careful about
+	protecting read-only databases.
+
+Mon Dec 19 00:06:36 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* dbutil.scm (dbutil:define-tables): added utility which provides:
+	Data definition from Scheme lists for any SLIB
+	relational-database.
+
+Sat Dec 17 12:10:02 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* alistab.scm rdms.scm (make-getter row-eval): evaluation of
+	`expression' fields no longer done when retrieved from base
+	tables (which made copying of many tables impossible).
+
+	* alistab.scm 
+	(write-base): rewrote to not use pretty-print.
+
+	* sc3.scm: removed (only contained last-pair, t, and nil).
+
+	* Template.scm scheme48.init vscm.init (last-pair t nil): added.
+
+Thu Dec  8 00:02:18 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* mularg.scm pp.scm ratize.scm: copyright line removed from files
+	(still lacking terms) less than 12 lines.
+
+	From: johnm@vlibs.com (John Gerard Malecki)
+	* sort.scm (sort:sort!): long standing bug in sort! with vector
+	argument fixed.
+
+Thu Dec  1 17:10:24 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* *.scm: Most missing copyright notices supplied.
+
+Sun Nov 27 23:57:41 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* rdms.scm (make-relational-system base): now checks field types
+	when table is opened.  Domains table now has foreign-table field.
+	(for-each-row): ordered for-each function added.
+	* alistab.scm (ordered-for-each-key supported-key-type?): added.
+
+Thu Oct 27 12:20:41 1994  Tom Tromey  <tromey@drip.colorado.edu>
+
+	* priorque.scm: Renamed everything to conform to coding standards
+	and updated docs.  Changed names: heap-extract-max to
+	heap-extract-max!, heap-insert to heap-insert! and heap-size to
+	heap-length.
+
+Sat Nov 26 22:52:31 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* Template.scm *.init (identity): Now required; moved from
+	"comlist.scm".
+
+	* alistab.scm (alist-table): Converted to representing rows as
+	lists.  Non-row operations removed.
+
+	* rdms.scm (make-relational-system base): Most individual column
+	operations removed.  Only get and get* remain.  Row operations
+	renamed.   Row inserts and updates distinguished.
+
+Tue Nov 15 16:37:16 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* rdms.scm (make-relational-system base): Generalized database
+	system inspired by the Relational Model.
+
+	* alistab.scm (alist-table): Base table implementation suitable
+	for small databases and testing rdms.scm.
+
+Tue Oct 25 22:36:01 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	From: Tommy Thorn <Tommy.Thorn@irisa.fr>
+	* chez.init (scheme-implementation-version): fixed (changed to "?").
+	(library-vicinity): The definition of library-vicinity used
+	getenv, which was defined later.
+	(slib:chez:quit): The definition of slib:chez:quit was illegal.
+	Fixed.
+	(chez:merge!): had a typo.
+	(defmacro:load): (require 'struct) didn't work, because defmacro:load
+	doesn't add suffix.  Workaround: defmacro:load and macro:load is
+	the same as slib:load-source.
+
+Wed Oct 19 11:44:12 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* require.scm time.scm cltime.scm (difftime offset-time): added to
+	allow 'posix-time functions to work with a non-numeric type
+	returned by (current-time).
+
+Tue Aug  2 10:44:32 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* repl.scm (repl:top-level repl:repl): Multiple values at top
+	level now print nicely.
+
+Sun Jul 31 21:39:54 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* cltime.scm (get-decoded-time get-universal-time
+	decode-universal-time encode-universal-time): 
+	Common-Lisp time conversion routines created.
+
+	* time.scm (*timezone* tzset gmtime localtime mktime asctime ctime):
+	Posix time conversion routines created.
+
+Mon Jul 11 14:16:44 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* Template.scm mitscheme.init scheme2c.init t3.init (*features*):
+	trace added.
+
+Fri Jul  8 11:02:34 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* chap.scm ((chap:string<? s1 s2) (chap:next-string s)): Functions
+	for "chapter ordering" of strings.
+
+Mon Jun 20 22:36:44 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* slib.texi (R4RS Macros section): added.
+
+	From: jjb@isye.gatech.edu (John Bartholdi)
+	* sierpinski.scm (MAKE-SIERPINSKI-INDEXER): added.
+	* soundex.scm (SOUNDEX): added.
+
+	From: hugh@cosc.canterbury.ac.nz (Hugh Emberson)
+	* mwexpand.scm ((mw:quasiquote exp env)): Fixed bug which occured
+	when mw:quasiquote expanded things like `(1 2 3 . ,(+ 1 a)).  I
+	added support for vectors in quasiquotes while I was there.
+
+Sun Jun 19 00:37:09 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* defmacex.scm ((defmacro:expand* e)): fixed problem with varargs
+	define.
+
+Sat Jun 18 13:08:33 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* randinex.scm ((random:size-float l x)): no longer assumes that
+	inexact numbers have finite precision, which is not necessarily
+	true (pointed out by jar@ai.mit.edu).  Limits size to 4.
+
+Mon Jun  6 00:46:48 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* trace.scm (trace untrace): created.
+	(debug:tracef debug:untracef): moved from debug.scm
+
+Sun May 22 23:44:03 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* yasyn.scm: replaces yasos.scm
+
+Sat May 21 22:28:01 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* comlist.scm ((comlist:has-duplicates? lst)): added.
+
+Mon May 16 13:40:18 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	From: jjb@isye.gatech.edu (John Bartholdi)
+	* macscheme.init (slib:exit): fixed.  Version set to 4.2.
+
+Wed Apr 27 00:48:54 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	From: jjb@isye.gatech.edu (John Bartholdi)
+	* scanf.scm (scanf fscanf sscanf): created.
+
+Thu Apr 14 12:59:41 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	From: pegelow@moorea.uni-muenster.de (Ulrich Pegelow)
+	* mbe.scm (hyg:tag-do): Scoping was wrong.  The region of binding
+	of a <variable> did not include the <step> expression and the
+	<test> expression, instead it incorrectly included the <init>
+	expression. (rf. R4RS, 4.2.4)
+	(hyg:tag-lambda): the body of a lambda expression should be
+	generated using hyg:tag-generic instead of hyg:tag-vanilla. This
+	allows expressions within lambda to behave hygienically.
+	(hyg:tag-let):  extended to support `named let'.
+
+Sun Apr 10 00:22:04 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* README: INSTALLATION INSTRUCTIONS greatly improved.
+	* Template.scm *.init:  Path configurations move to top of files
+	for easier installation.
+
+	* FAQ: File of Frequently Asked Questions and answers added.
+
+Sat Apr  9 21:28:46 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* slib.texi (Vicinity): scheme-file-suffix removed.  Use
+	slib:load or slib:load-source instead.
+
+Wed Apr  6 00:55:16 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* require.scm (slib:report):
+	(slib:report-version): 
+	(slib:report-locations):  added to display SLIB configuration
+	information.
+
+Mon Apr  4 08:48:37 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* Template.scm *.init (slib:exit): added.
+
+Fri Apr  1 14:36:46 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* Makefile (intro): Added idiot message for those who make.
+	Cleaned up and reorganized Makefile.
+
+Wed Mar 30 00:28:30 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* Template.scm *.init ((slib:eval-load <pathname> evl)): created
+	to service all macro loads.
+
+	From: whumeniu@datap.ca (Wade Humeniuk)
+	* recobj.scm yasyn.scm: added.  These implement RECORDS and
+	YASOS using object.scm object system.
+
+Sun Mar  6 01:10:53 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	From: barnett@armadillo.urich.edu (Lewis Barnett)
+	* gambit.init (implementation-vicinity library-vicinity): Relative
+	pathnames for Slib in MacGambit.
+
+	From: lucier@math.purdue.edu (Brad Lucier)
+	* random.scm (random:random random:chunks/float): fixed off-by-one
+	and slop errors.
+
+Thu Mar  3 23:06:41 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	From: lutzeb@cs.tu-berlin.de (Dirk Lutzebaeck)
+	* format.scm slib.texi: Format 3.0.
+  * format's configuration is rearranged to fit only into SLIB. All
+    implementation dependent configurations are done in the SLIB init files
+  * format's output routines rely on call-with-output-string now if 
+    output to a string is desired
+  * The floating point formatting code (formatfl.scm) moved into
+    format.scm so that there is only one source code file; this
+    eliminates the configuration of the load path for the former
+    formatfl.scm and the unspecified scope of the load primitive
+  * floating point formatting doesn't use any floating point operation or
+    procedure except number->string now; all formatting is now based
+    solely on string, character and integer manipulations
+  * major rewrite of the floating point formatting code; use global
+    buffers now  
+  * ~f,~e,~g, ~$ may use also number strings as an argument
+  * ~r, ~:r, ~@r, ~:@r roman numeral, and ordinal and cardinal
+    English number printing added (from dorai@cs.rice.edu)
+  * ~a has now a working `colinc' parameter
+  * ~t tabulate directive implemented
+  * ~/ gives a tabulator character now (was ~T in version < 2.4)
+  * ~& fresh line directive implemented
+  * ~@d, ~@b, ~@o and ~@x now has the CL meaning (plus sign printed)
+    automatic prefixing of radix representation is removed
+  * ~i prints complex numbers as ~f~@fi with passed parameters
+  * ~:c prints control characters like emacs (eg. ^C) and 8bit characters
+    as an octal number
+  * ~q gives information and copyright notice on this format implementation
+    ~:q gives format:version 
+  * case type of symbol conversion can now be forced (see
+    format:symbol-case-conv in format.scm)
+  * case type of the representation of internal objects can now be
+    forced (see format:iobj-case-conv format.scm)
+  * format error messages are now printed on the current error port
+    if available by the implementation
+  * format now accepts a number as a destination port; the output
+    is then always directed to the current error port if available by
+    the implementation
+  * if format's destination is a string it is regarded as a format string now
+    and output is the current output port; this is a contribution to
+    Scheme->C to use format with the runtime system; the former semantics
+    to append tothe destination string is given up  
+  * obj->string syntax change and speedup
+  * tested with scm4d, Elk 2.2, MIT Scheme 7.1, Scheme->C 01Nov91
+
+
+Wed Mar  2 13:16:37 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	From: Matthias Blume <blume@cs.Princeton.EDU>
+	* vscm.init: added.
+
+Fri Feb 18 23:51:41 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	From: jjb@isye.gatech.edu (John Bartholdi)
+	* macscheme.init: added.
+
+Thu Feb 17 01:19:47 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* ppfile.scm ((pprint-filter-file inport filter outport)): added.
+	Useful for pre-expanding macros.  Preserves top-level comments.
+
+Wed Feb 16 12:44:34 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	From: dorai@cs.rice.edu (Dorai Sitaram)
+	* mbe.scm: Macro by Example define-syntax using	defmacro.
+
+Tue Feb 15 17:18:56 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	From: whumeniu@datap.ca (Wade Humeniuk)
+	* object.scm: Macroless Object System
+
+Mon Feb 14 00:48:18 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* defmacex.scm (defmacro:expand*): replaces "defmacro.scm".  Other
+	defmacro functions now supported in all implementations.
+
+Sun Feb 13 12:38:39 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* defmacro.scm (defmacro:macroexpand*): now expands quasiquotes
+	correctly.
+
+Sat Feb 12 21:23:56 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* hashtab.scm ((predicate->hash pred)): moved from hash.scm.
+
+Tue Feb  8 01:07:00 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* Template.scm *.init (slib:load-source slib:load-compiled
+	slib:load): support for loading compiled modules added.
+	Dependence on SCHEME-FILE-SUFFIX removed.
+
+	* require.scm (require:require): Added support for 'source and
+	'compiled features.
+
+Sat Feb  5 00:19:38 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* stdio.scm ((stdio:sprintf)): Now truncates printing if you run
+	out of string.
+
+Fri Feb  4 00:54:14 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	From: pk@kaulushaikara.cs.tut.fi (Kellom{ki Pertti)
+	* (psd/primitives.scm): Here is a patch removing some problems
+	with psd-1.1, especially when used with Scheme 48. Thanks to
+	Jonathan Rees for poiting them out. The patch fixes two problems:
+	references to an unused variable *psd-previous-line*, and the
+	correct number of arguments to write-char.
+
+Fri Jan 14 00:37:19 1994  Aubrey Jaffer  (jaffer@jacal)
+
+	* require.scm (require:require): Now supports (feature .
+	argument-list) associations.
+
+Sat Nov 13 22:07:54 1993    (jaffer at jacal)
+
+	* slib.info (Structures): added.  Bug - struct.scm and
+	structure.scm do not implement the same macros.
+
+Mon Nov  1 22:17:01 1993    (jaffer at jacal)
+
+	* array.scm (array-dimensions array-rank array-in-bounds?):
+	added.
+
+Sat Oct  9 11:54:54 1993    (jaffer at jacal)
+
+	* require.scm (*catalog* portable-scheme-debugger): support added
+	for psd subdirectory.
+
+Tue Sep 21 11:48:26 1993  Aubrey Jaffer  (jaffer at wbtree)
+
+	* Makefile (lineio.scm rbtree.scm rbtest.scm scmacro.scm
+	sc4sc3.scm scaespp.scm scaglob.scm scainit.scm scamacr.scm
+	scaoutp.scm strcase.scm): hyphens removed from names.
+
+Mon Sep 20 00:57:29 1993    (jaffer at jacal)
+
+	* arraymap.scm (array-map! array-for-each array-indexes): added.
+
+Sun Sep 19 19:20:49 1993    (jaffer at jacal)
+
+	* require.scm (require:feature->path require:require *catalog*):
+	associations of the form (symbol1 . symbol2) in *catalog* look up
+	symbol2 whenever symbol1 is specified.
+
+Mon Sep 13 22:12:00 1993    (jaffer at jacal)
+
+	From: sperber@provence.informatik.uni-tuebingen.de (Michael Sperber)
+	* elk.init: updated to ELK version 2.1.
+
+Sat Sep 11 21:17:45 1993    (jaffer at jacal)
+
+	* hashtab.scm (hash-for-each): fixed and documented (also
+	documented alist.scm).
+
+Fri Sep 10 15:57:50 1993    (jaffer at jacal)
+
+	* getopt.scm (getopt *optind* *optarg*): added.
+
+Tue Sep  7 23:57:40 1993    (jaffer at jacal)
+
+	* slib1d3 released.
+	* comlist.scm: prefixed all functions with "comlist:".
+
+Tue Aug 31 23:59:28 1993    (jaffer at jacal)
+
+	* Template.scm *.init (output-port-height): added.
+
+Wed May 26 00:00:51 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* hashtab.scm (hash-map hash-for-each): added.
+	* alist.scm (alist-map alist-for-each): added.
+
+Tue May 25 22:49:01 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* comlist.scm (delete delete-if atom): renamed as in common lisp.
+	* comlist.scm (delete-if-not): added.
+	* tree.scm: moved tree functions out of comlist.scm
+
+Mon May 24 10:28:22 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	From: hanche@ams.sunysb.edu (Harald Hanche-Olsen)
+	* modular.scm: improvements and fixed bug in modular:expt.
+
+Fri May 14 01:26:44 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* slib1d2 released.
+
+	From: Dave Love <d.love@daresbury.ac.uk>
+	* comlist.scm: added some tree functions.
+	* yasos.scm collect.scm: fixed name conflicts and documentation.
+
+Tue May 11 01:22:40 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* eval.scm: removed because all *.init files support it.
+
+	* hash.scm: made all hash functions case-insensitive.  Equal
+	inexact and exact numbers now hash to the same code.
+
+	From: eigenstr@falstaff.cs.rose-hulman.edu:
+	* slib.texi: revised.
+	
+Sun May  9 01:43:11 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	From: kend@newton.apple.com (Ken Dickey)
+	* macwork.scm mwexpand.scm mwdenote.scm mwsynrul.scm: Macros no
+	longer expand builtin Scheme forms.
+
+	From: William Clinger <will@skinner.cs.uoregon.edu>
+	* macwork.scm mwexpand.scm mwdenote.scm mwsynrul.scm: Macros that
+	work added.
+
+Sat May  1 23:55:42 1993  Aubrey Jaffer  (jaffer at montreux)
+
+	* random.scm (random:random): sped up for exact arguments.
+
+Wed Apr 28 00:24:36 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	From: lutzeb@flp.cs.tu-berlin.de (Dirk Lutzebaeck)
+	* format.scm formatfl.scm formatst.scm slib.texi: Format 2.3.
+   * implemented floating point support ~F,~E,~G,~$
+   * automatic detection if the scheme interpreter support flonums.
+   * the representation of internal objects can be selected to be
+     #<...> or #[...] or other forms
+   * new/redefintion of configuration variables format:abort,
+     format:floats, format:formatfl-path, format:iobj-pref, format:iobj-post
+   * added string-index
+   * added MIT Scheme 7.1 custom types
+   * for efficiencies reasons the error continuation is only used if
+     format:abort is not available
+   * improved error presentation and error handling
+   * tested with scm4b/c, Elk 2.0, MIT Scheme 7.1, Scheme->C 01Nov91,
+     UMB Scheme 2.5/2.10
+
+Sun Apr 25 22:40:45 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	From: Dave Love <d.love@daresbury.ac.uk>
+	* scheme2c.init: corrections and portability improvements.
+	* yasos.scm collect.scm:
+These correct the scheme2c.init and a couple of other things as well as
+hiding some non-exported definitions and removing an example from
+collect.scm to the manual.
+
+Sat Apr  3 00:48:13 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	From: eigenstr@cs.rose-hulman.edu (Todd R. Eigenschink)
+	* slib.texi: created.
+
+Thu Mar 25 01:47:38 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	From: hanche@ams.sunysb.edu (Harald Hanche-Olsen)
+	* sca-init.scm sca-glob.scm sca-macr.scm sca-outp.scm
+	sca-expp.scm: syntax-case macros added.
+
+Wed Mar 24 23:12:49 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* comlist.scm (some every notany notevery): Now accept multiple
+	arguments.  NOTANY added.
+
+Wed Mar  3 01:19:11 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	From: "Dan Friedman" <dfried@cs.indiana.edu>
+	* struct.scm structst.scm: added.
+
+Tue Mar  2 00:28:00 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* obj2str (object->string): now handles symbols and number without
+	going to string-port.
+
+Sun Feb 28 22:22:50 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* all files with Jaffer copyright: Now have explicit conditions
+	for use and copying.
+
+Fri Feb 26 00:29:18 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* obj2str: redefined in terms of string ports.
+
+	* pp2str: eliminated.
+
+Mon Feb 22 17:21:21 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	From: dorai@cs.rice.edu (Dorai Sitaram)
+	* strport.scm: string ports.
+
+	From: Alan@LCS.MIT.EDU (Alan Bawden)
+	* array.scm: functions which implement arrays.
+
+Wed Feb 17 00:18:57 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* repl.scm: split off from sc-macro.scm.
+
+	* eval.scm *.init Template.scm (eval!): eliminated.
+
+	From: dorai@cs.rice.edu (Dorai Sitaram)
+	* defmacro.scm: added.  Chez, elk, mitscheme, scheme2c, and scm
+	support.
+
+Tue Feb 16 00:23:07 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* require.doc (output-port-width current-error-port tmpnam
+	file-exists? delete-file force-output char-code-limit
+	most-positive-fixnum slib:tab slib:form-feed error):descriptions
+	added.
+
+	* *.init (tmpnam): now supported by all.
+
+	From: dorai@cs.rice.edu (Dorai Sitaram)
+	* chez.init elk.init mitscheme.init scheme2c.init (defmacro macro?
+	macro-expand): added.
+
+Mon Feb 15 00:51:22 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* Template.scm *.init (file-exists? delete-file): now defined for
+	all implementations.
+
+Sat Feb 13 23:40:22 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* chez.init (slib:error): output now directed to
+	(current-error-port).
+
+Thu Feb 11 01:23:25 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* withfile.scm (with-input-from-file with-output-from-file): now
+	close file on thunk return.
+
+	* *.init (current-error-port): added.
+
+Wed Feb 10 17:57:15 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* mitscheme.init (values dynamic-wind): added to *features*.
+
+	From: mafm@cs.uwa.edu.au (Matthew MCDONALD)
+	* mitcomp.pat: added patch file of definitions for compiling SLIB
+	with MitScheme.
+
+Tue Feb  9 10:49:12 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	From: jt@linus.mitre.org (F. Javier Thayer)
+	* t3.init: additions and corrections.
+
+Mon Feb  8 20:27:18 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	From: dorai@cs.rice.edu (Dorai Sitaram)
+	* chez.init: added.
+
+Wed Feb  3 23:33:49 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* sc-macro.scm (macro:repl): now prints error message for errors.
+
+Mon Feb  1 22:22:17 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* logical.scm (logor): changed to logior to be compatible with
+	common Lisp.
+
+Fri Jan 29 17:15:03 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	From: jt@linus.mitre.org (F. Javier Thayer)
+	* t3.init: modified so it passes most of SCM/test.scm.
+
+Sun Jan 24 00:18:13 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* comlist.scm (intersection): added.
+
+Wed Jan 13 19:01:11 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* debug.scm: (debug:qp): needed to shadow quotient.
+
+Sat Jan  9 13:44:44 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* rb-tree.scm: changed use of '() and NULL? to #f and NOT.
+
+	* rb-tree.scm (rb-insert! rb-delete!) added ! to names.
+
+Fri Jan  8 01:17:16 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	* rb-tree.doc: added.
+
+	From: pgs@ai.mit.edu (Patrick Sobalvarro)
+	* rb-tree.scm rbt-test.scm: code for red-black trees added.
+
+Tue Jan  5 14:57:02 1993  Aubrey Jaffer  (jaffer at camelot)
+
+	From: lutzeb@cs.tu-berlin.de (Dirk Lutzebaeck)
+	* format.scm formatst.scm format.doc: version 2.2
+   * corrected truncation for fixed fields by negative field parameters
+     inserted a '<' or a '>' when field length was equal to object string
+     length
+   * changed #[...] outputs to #<...> outputs to be conform to SCM's
+     display and write functions
+   * changed #[non-printable-object] output to #<unspecified>
+   * ~:s and ~:a print #<...> messages in strings "#<...>" so that the
+     output can always be processed by (read)
+   * changed implementation dependent part: to configure for various scheme
+     systems define the variable format:scheme-system
+   * format:version is a variable returning the format version in a string
+   * format:custom-types allows to use scheme system dependent predicates
+     to identify the type of a scheme object and its proper textual
+     representation
+   * tested with scm4a14, Elk 2.0
+
+Tue Dec 22 17:36:23 1992  Aubrey Jaffer  (jaffer at camelot)
+
+	* Template.scm *.init (char-code-limit): added.
+
+	* debug.scm (qp): qp-string had bug when printing short strings
+	when room was less than 3.
+
+	* random.scm (random:size-int): now takes most-positive-fixnum
+	into account.
+
+Wed Nov 18 22:59:34 1992  Aubrey Jaffer  (jaffer at camelot)
+
+	From: hanche@ams.sunysb.edu (Harald Hanche-Olsen)
+	* randinex.scm (random:normal-vector! random:normal
+	random:solid-sphere random:hollow-sphere): new versions fix bug.
+
+Tue Nov 17 14:00:15 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* str-case.scm (string-upcase string-downcase string-capitalize
+	string-upcase! string-downcase! string-capitalize!): moved from
+	format.scm.
+
+Fri Nov  6 01:09:38 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* require.scm (require): uses base:load instead of load.
+
+	* sc-macro.scm (macro:repl): now uses dynamic-wind.
+
+Mon Oct 26 13:21:04 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* comlist.scm (nthcdr last) added.
+
+Sun Oct 25 01:50:07 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* line-io.scm: created
+
+Mon Oct 19 12:53:01 1992  Aubrey Jaffer  (jaffer at camelot)
+
+	From: dorai@cs.rice.edu
+	* fluidlet.scm: FLUID-LET that works.
+
+Thu Oct  8 22:17:01 1992  Aubrey Jaffer  (jaffer at camelot)
+
+	From: Robert Goldman <rpg@rex.cs.tulane.edu>
+	* mitscheme.init: improvements.
+
+Sun Oct  4 11:37:57 1992  Aubrey Jaffer  (jaffer at camelot)
+
+	* values.scm values.doc: Documentation rewritten and combined
+	into values.scm
+
+Thu Oct  1 23:29:43 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* sc-macro.scm sc-macro.doc: documentation improved and moved into
+	sc-macro.doc.
+
+Mon Sep 21 12:07:13 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* sc-macro.scm (macro:load): now sets and restores *load-pathname*.
+
+	* eval.scm (slib:eval!): (program-vicinity) now correct during
+	evaluation.
+
+	* Template.scm, *.init: i/o-redirection changed to with-file.
+	*features* documentation changed.
+
+	From: Stephen J Bevan <bevan@computer-science.manchester.ac.uk>
+	* t3.init: new.  Fixes problems with require, substring, and
+	<,>,<=,>= with more than 2 arguments.
+
+Fri Sep 18 00:10:57 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	From andrew@astro.psu.edu Wed Sep 16 17:58:21 1992
+	* dynamic.scm: added.
+
+	From raible@nas.nasa.gov Thu Sep 17 22:28:25 1992
+	* fluidlet.scm: added.
+
+Sun Sep 13 23:08:46 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* sc-macro.scm (macro:repl): moved (require 'debug) into syntax-error.
+
+	* dynwind.scm, withfile.scm, trnscrpt.scm: created.
+
+	From kend@data.rain.com Sun Sep 13 21:26:59 1992
+	* collect.scm: created.
+	* oop.scm => yasos.scm: updated.
+	* oop.doc: removed.
+
+	From: Stephen J. Bevan <bevan@cs.man.ac.uk> 19920912
+	* elk.init: created
+
+Tue Jul 14 11:42:57 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* tek41.scm tek40.scm: added.
+
+Tue Jul  7 00:55:58 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* record.scm record.doc (record-sub-predicate): added.
+
+	* sc-macro.scm (macro:repl): syntax-errors now return into
+	macro:repl.
+
+	* debug.scm (qp): removed (newline).  Added qpn (qp with newline).
+
+Sun Jun 14 22:57:32 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* slib1b8 released.
+
+Sat Jun 13 17:01:41 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* alist.scm ppfile.scm: added.
+
+	* hash.scm hashtab.scm scheme48.init: added.
+
+	* sc-macro.scm (macro:repl): created.  macro:load now uses
+	eval:eval!. 
+
+	* eval.scm (eval:eval!) created and eval done in terms of it.
+
+	* prime.scm (prime:prime?) fixed misplaced parenthesis.
+
+Wed May 27 16:13:17 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	From: "Chris Hanson" <cph@martigny.ai.mit.edu>
+	* synrul.scm (generate-match): fixed for CASE syntax.
+
+Wed May 20 00:25:40 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* slib1b6 released.
+
+	* Template.scm gambit.init mitscheme.init scheme2c.init:
+	rearranged *features*.
+
+Tue May 19 22:51:28 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* scmactst.scm: test cases fixed.
+
+	From: "Chris Hanson" <cph@martigny.ai.mit.edu>
+	* r4syn.scm (make-r4rs-primitive-macrology):  TRANSFORMER added
+	back in.
+
+	* require.scm (load): load now passes through additional
+	arguments to *old-load*.
+
+Mon May 18 00:59:36 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* mulapply.scm (apply): written.
+
+	* record.scm record.doc (make-record-sub-type): added.
+
+Fri May  8 17:55:14 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* process.scm: created, but not finished.
+
+	From: hugh@ear.mit.edu (Hugh Secker-Walker)
+	* comlist.scm (nreverse make-list): non-recursive versions added.
+
+	* sc2.scm (1+ -1+): versions which capture +.
+
+	* mularg.scm (- /): created.
+
+Wed Apr  8 00:05:30 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* require.scm sc-macro.scm (catalog): Now uses macro:load if
+	'macro is part of catalog entry.
+
+	From: Andrew Wilcox (awilcox@astro.psu.edu)
+	* queue.scm: created.
+
+Sun Mar 15 12:23:06 1992  Aubrey Jaffer  (jaffer at Ivan)
+
+	* comlist.scm (notevery): fixed.  Now (not (every ..)).
+
+	* eval.scm (eval:eval): renamed to slib:eval.
+
+	* record.scm: replaced with version from From: david carlton
+	<carlton@husc.harvard.edu>.  I changed updater => modifier, put
+	record-predicate into the rtd, and bummed code mercilessly.
+
+	From: plogan@std.mentor.com (Patrick Logan)
+	* sc3.scm (last-pair): changed from testing null? to pair?.
