@@ -708,7 +708,7 @@
 ; 
 ; Comment this out if you don't want to use SLIB
 
-(load "/usr/local/lib/scheme/SLIB-for-umb-scheme.init")
+(load "SLIB-for-umb-scheme.init")
 
 ; MAINTENANCE PROCEDURES
 
