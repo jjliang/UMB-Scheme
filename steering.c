@@ -36,6 +36,7 @@ For additional information about UMB Scheme, contact the author:
 
 #include  <setjmp.h>
 #include  <signal.h>
+#include  <string.h>
 
 #include "portable.h"
 #include "eval.h"
@@ -62,7 +63,7 @@ Private Boolean File_Exists();
 
 #define TOP_LEVEL_PROMPT "\n==> "
 
-#define STANDARD_PRELUDE_PATHNAME "prelude.scheme"
+#define STANDARD_PRELUDE_PATHNAME strcat(getenv("$HOME"), "/Scheme/UMB-Scheme/prelude.scheme")
 
 Private String OPENING  =
 "Welcome to UMB Scheme, version      Copyright (c) 1988,1996 William R Campbell.\n\
@@ -223,7 +224,7 @@ Public void Read_Eval_Print( input )
 	}
 }
 
-
+
 #define ERROR_PREFIX "\nError: "
 #define PANIC_PREFIX "\nFatal Error: "
 
@@ -274,7 +275,7 @@ Public void Panic( message )
 	Error_Output( ".\n" );
 	Reset();
 }
-
+
 Public	void Break()
 {
 	Import	jmp_buf	Eval_Loop;
@@ -347,7 +348,7 @@ Public	void Handler( sig )
 		Panic( "Unhandled Signal" );
 	}
 }
-
+
 Private void Initializations()
 {
 	/* The order of these does matter. */
