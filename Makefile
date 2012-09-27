@@ -74,4 +74,4 @@ nonums:
                 io.h io.c 
 
 clean:
-		rm -rf *.o a.out
+		rm -rf *.o a.out scheme
