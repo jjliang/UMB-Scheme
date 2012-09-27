@@ -62,7 +62,7 @@ Private Boolean File_Exists();
 
 #define TOP_LEVEL_PROMPT "\n==> "
 
-#define STANDARD_PRELUDE_PATHNAME "/home/tmullaly/nobackup/linux/scheme-3.2/prelude.scheme"
+#define STANDARD_PRELUDE_PATHNAME "prelude.scheme"
 
 Private String OPENING  =
 "Welcome to UMB Scheme, version      Copyright (c) 1988,1996 William R Campbell.\n\
